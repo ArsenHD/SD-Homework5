@@ -103,7 +103,7 @@ class GameView(size: Size) {
 
         screen.handleKeyboardEvents(KeyboardEventType.KEY_PRESSED) { event, _ ->
             if (event.code == KeyCode.ESCAPE) {
-                pauseManuScreen.display()
+                openPauseMenu()
             }
             Processed
         }
@@ -127,6 +127,13 @@ class GameView(size: Size) {
 
         screen.addComponent(toMainMenuButton)
 
+        screen.handleKeyboardEvents(KeyboardEventType.KEY_PRESSED) { event, _ ->
+            if (event.code == KeyCode.ESCAPE) {
+                closePauseMenu()
+            }
+            Processed
+        }
+
         return screen
     }
 
@@ -135,6 +142,14 @@ class GameView(size: Size) {
             val keyInput = KeyInput.fromKeyCode(event.code)
             keyInput.handle(this, player)
         }
+    }
+
+    private fun openPauseMenu() {
+        pauseManuScreen.display()
+    }
+
+    private fun closePauseMenu() {
+        gameScreen.display()
     }
 
     companion object {
