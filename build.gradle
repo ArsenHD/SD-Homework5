@@ -39,7 +39,7 @@ task fatJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'Gradle Uberjar',
                 'Implementation-Version': archiveVersion,
-                'Main-Class': 'Main'
+                'Main-Class': 'ru.itmo.sd.roguelike.GameKt'
     }
     archivesBaseName = "uber-${project.name}"
     from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
