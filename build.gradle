@@ -1,0 +1,48 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.6.20'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.6.20'
+    id 'java'
+}
+
+group 'ru.itmo.sd.roguelike'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2"
+    implementation "org.hexworks.zircon:zircon.core-jvm:2021.1.0-RELEASE"
+    implementation "org.hexworks.zircon:zircon.jvm.swing:2021.1.0-RELEASE"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+sourceSets {
+    main {
+        java.setSrcDirs(["src"])
+        resources.setSrcDirs(["resources"])
+    }
+    test {
+        java.setSrcDirs(["test"])
+        resources.setSrcDirs(["testResources"])
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Uberjar',
+                'Implementation-Version': archiveVersion,
+                'Main-Class': 'Main'
+    }
+    archivesBaseName = "uber-${project.name}"
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    with jar
+}
