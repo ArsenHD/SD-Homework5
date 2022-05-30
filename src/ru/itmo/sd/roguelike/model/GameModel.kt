@@ -19,6 +19,10 @@ class GameModel(private val view: GameView) {
      */
     private var gameMap: GameMap? = null
 
+    init {
+        File(SAVED_MAPS_DIRECTORY).mkdirs()
+    }
+
     fun selectNewMap(newMap: GameMap) {
         gameMap = newMap
         view.displayGameMap(newMap)
